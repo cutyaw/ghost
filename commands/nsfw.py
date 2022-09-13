@@ -68,6 +68,13 @@ class NSFW(commands.Cog):
         randimg = random.choice(data)
         await ctx.send(randimg["file_url"], delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
+    @commands.command(name="neko", description="Get a random neko image.", usage="")
+    async def neko(self, ctx):
+        cfg = config.Config()
+        r = requests.get("https://nekobot.xyz/api/image?type=neko")
+        data = r.json()
+        await ctx.send(data["message"], delete_after=cfg.get("message_settings")["auto_delete_delay"])
+
 
 def setup(bot):
     bot.add_cog(NSFW(bot))
