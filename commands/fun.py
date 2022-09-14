@@ -14,7 +14,6 @@ from utils import cmdhelper
 from utils import embed as embedmaker
 
 class Fun(commands.Cog):
-
     def __init__(self, bot):
         self.bot = bot
         self.cfg = config.Config()
