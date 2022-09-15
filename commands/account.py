@@ -126,5 +126,43 @@ class Account(commands.Cog):
             await ctx.send(file=discord.File(embed_file, filename="embed.png"))
             os.remove(embed_file)
 
+    @backup.command(name="restore", description="Restore a backup.", usage="[backup file]")
+    async def restore(self, ctx, backup_file: str):
+        cfg = config.Config()
+        
+        if not os.path.exists(backup_file):
+            if cfg.get("theme")["style"] == "codeblock":
+                await ctx.send(str(codeblock.Codeblock("Error", extra_title=f"Backup {backup_file} doesn't exist.")))
+            else:
+                embed = embedmaker.Embed(title="Error", description=f"Backup {backup_file} doesn't exist.", colour=cfg.get("theme")["colour"])
+                embed_file = embed.save()
+
+                await ctx.send(file=discord.File(embed_file, filename="embed.png"))
+                os.remove(embed_file)
+            
+            return
+
+        backup_type = ""
+        backup = []
+
+        with open(backup_file, "r") as f:
+            lines = f.readlines()
+            backup_type = lines[0].replace("# ", "").replace("\n", "")
+            for line in lines[2:]:
+                line = line.replace("\n", "").split(":")
+                backup.append([line[0], line[-1]])
+
+        print(f"{backup_type=}")
+        print(f"{backup=}")
+
+        if cfg.get("theme")["style"] == "codeblock":
+            await ctx.send(str(codeblock.Codeblock("restore backup", extra_title=f"Restore backup is currenting a WIP feature.")))
+        else:
+            embed = embedmaker.Embed(title="Restore Backup", description=f"Restore backup is currenting a WIP feature.", colour=cfg.get("theme")["colour"])
+            embed_file = embed.save()
+
+            await ctx.send(file=discord.File(embed_file, filename="embed.png"))
+            os.remove(embed_file)
+
 def setup(bot):
     bot.add_cog(Account(bot))
