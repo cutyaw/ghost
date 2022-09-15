@@ -75,6 +75,17 @@ class NSFW(commands.Cog):
         data = r.json()
         await ctx.send(data["message"], delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
+    @commands.command(name="rule34", description="Get a rule34 image by tag.", aliases=["r34"], usage="")  
+    async def rule34(self, ctx, *, tag):
+        cfg = config.Config()
+        if (("child" in tag) or ("shota" in tag) or ("loli" in tag)):
+            await ctx.send("Sorry, but that tag is illegal ❌", delete_after=cfg.get("message_settings")["auto_delete_delay"]) 
+            return
+        r = requests.get(f"https://r34-json-api.herokuapp.com/posts?tags={tag}")
+        data = r.json()
+        randimg = random.choice(data)
+        await ctx.send(randimg["file_url"], delete_after=cfg.get("message_settings")["auto_delete_delay"])  
+
 
 def setup(bot):
     bot.add_cog(NSFW(bot))
