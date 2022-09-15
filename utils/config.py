@@ -7,6 +7,7 @@ VERSION = "3.0.0"
 DEFAULT_CONFIG = {
     "token": "",
     "prefix": "",
+    "rich_presence": True,
     "message_settings": {
         "auto_delete_delay": 15
     },
