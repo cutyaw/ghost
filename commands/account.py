@@ -66,7 +66,7 @@ class Account(commands.Cog):
                 await ctx.send(file=discord.File(embed_file, filename="embed.png"), delete_after=cfg.get("message_settings")["auto_delete_delay"])
                 os.remove(embed_file)
 
-    @backup.command(name="friends", description="Backup your friends to a txt file.", usage="")
+    @backup.command(name="friends", description="Backup your friends.", usage="")
     async def friends(self, ctx):
         cfg = config.Config()
         resp = requests.get("https://discord.com/api/users/@me/relationships", headers={
@@ -88,21 +88,43 @@ class Account(commands.Cog):
             return
 
         friends = resp.json()
-        friend_list = ""
+        friend_list = ["# friends\n"]
 
         for friend in friends:
             if friend["type"] == 1:
-                friend_list += f"{friend['user']['username']}#{friend['user']['discriminator']}:{friend['user']['id']}\n"
+                friend_list.append(f"{friend['user']['username']}#{friend['user']['discriminator']}:{friend['user']['id']}")
 
         with open("friends.txt", "w") as f:
-            f.write(friend_list)
+            f.write("\n".join(friend_list))
         
-        await ctx.send(file=discord.File("friends.txt", filename="friends.txt"))
+        if cfg.get("theme")["style"] == "codeblock":
+            await ctx.send(str(codeblock.Codeblock("friends backup", extra_title=f"Saved {len(friend_list) - 1} friends to friends.txt")))
+        else:
+            embed = embedmaker.Embed(title="Friends Backup", description=f"Saved {len(friend_list) - 1} friends to friends.txt", colour=cfg.get("theme")["colour"])
+            embed_file = embed.save()
 
-    @backup.command(name="guilds", description="Backup your guilds to a txt file.", usage="")
+            await ctx.send(file=discord.File(embed_file, filename="embed.png"))
+            os.remove(embed_file)
+
+    @backup.command(name="guilds", description="Backup your guilds.", usage="", aliases=["servers"])
     async def guilds(self, ctx):
-        # TODO: save guilds to a txt file, format: guild_name:guild_id
-        pass
+        cfg = config.Config()
+        guilds = ["# guilds\n"]
+
+        for guild in self.bot.guilds:
+            guilds.append(F"{guild.name}:{guild.id}")
+
+        with open("guilds.txt", "w") as f:
+            f.write("\n".join(guilds))
+
+        if cfg.get("theme")["style"] == "codeblock":
+            await ctx.send(str(codeblock.Codeblock("guilds backup", extra_title=f"Saved {len(self.bot.guilds)} guilds to guilds.txt")))
+        else:
+            embed = embedmaker.Embed(title="Guilds Backup", description=f"Saved {len(self.bot.guilds)} guilds to guilds.txt", colour=cfg.get("theme")["colour"])
+            embed_file = embed.save()
+
+            await ctx.send(file=discord.File(embed_file, filename="embed.png"))
+            os.remove(embed_file)
 
 def setup(bot):
     bot.add_cog(Account(bot))
