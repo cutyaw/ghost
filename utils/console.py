@@ -25,9 +25,16 @@ def print_banner():
  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝   
 
 """
+    print(colorama.Fore.LIGHTBLUE_EX + colorama.Style.BRIGHT)
 
-    print(f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}")
-
+    # banner = banner.replace("█", f"{colorama.Fore.WHITE}{colorama.Style.BRIGHT}█{colorama.Style.RESET_ALL}")
+    # banner = banner.replace("╗", f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}╗{colorama.Style.RESET_ALL}")
+    # banner = banner.replace("║", f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}║{colorama.Style.RESET_ALL}")
+    # banner = banner.replace("═", f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}═{colorama.Style.RESET_ALL}")
+    # banner = banner.replace("╝", f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}╝{colorama.Style.RESET_ALL}")
+    # banner = banner.replace("╔", f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}╔{colorama.Style.RESET_ALL}")
+    # banner = banner.replace("╚", f"{colorama.Fore.LIGHTBLUE_EX}{colorama.Style.BRIGHT}╚{colorama.Style.RESET_ALL}")
+    
     print(pystyle.Center.XCenter(banner))
     # for line in banner.splitlines():
     #     print(f"{line}".center(os.get_terminal_size().columns))
