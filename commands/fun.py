@@ -342,5 +342,22 @@ Address       :: {address}
         await ctx.send(file=discord.File("cc-edited.png"))
         os.remove("cc-edited.png")
 
+    @commands.command(name="meme", description="Gets a random meme.", aliases=["getmeme", "randommeme"], usage="")
+    async def meme(self, ctx):
+        cfg = config.Config()
+        r = requests.get("https://www.reddit.com/r/memes.json?sort=top&t=week", headers={"User-agent": "Mozilla/5.0"})
+        if (r.status_code == 429):
+            if cfg.get("theme")["style"] == "codeblock":
+                await ctx.send(f"```ini\n[ error ] Too many requests, please try again later.\n```", delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            else:
+                embed = embedmaker.Embed(title="Error", description=f"Too many requests, please try again later.")
+                embed_file = embed.save()
+
+                await ctx.send(file=discord.File(embed_file, filename="embed.png"), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+                os.remove(embed_file)
+            return
+        meme = random.choice(r.json()["data"]["children"])["data"]["url"]
+        await ctx.send(meme)
+
 def setup(bot):
     bot.add_cog(Fun(bot))
