@@ -16,7 +16,7 @@ class Account(commands.Cog):
         self.cfg = config.Config()
 
     @commands.command(name="account", description="Account commands.", aliases=["acc"], usage="")
-    async def img(self, ctx, selected_page: int = 1):
+    async def account(self, ctx, selected_page: int = 1):
         cfg = config.Config()
         pages = cmdhelper.generate_help_pages(self.bot, "Account")
 
