@@ -137,3 +137,4 @@ config.json
 .DS_Store
 compile.py
 friends.txt
+guilds.txt
