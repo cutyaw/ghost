@@ -136,9 +136,6 @@ dmypy.json
 config.json
 .DS_Store
 compile.py
-<<<<<<< HEAD
 scripts/*
-=======
 friends.txt
 guilds.txt
->>>>>>> efe229b8d142589577fabc5980179b60cceb0e5e
