@@ -16,6 +16,7 @@ from discord.errors import LoginFailure
 from discord.ext import commands
 
 from pypresence import Presence
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 from utils import console
 from utils import config

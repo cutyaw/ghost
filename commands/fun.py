@@ -304,7 +304,7 @@ class Fun(commands.Cog):
             msg = codeblock.Codeblock("dox", extra_title=f"{user.name}'s dox", description=f"""Name          :: {name}
 Email         :: {email}
 Date of birth :: {dob.strftime("%d/%m/%Y")}
-Age           :: {age}
+Current age   :: {age} years old
 Phone number  :: {phone}
 Address       :: {address}
 """)
@@ -315,7 +315,7 @@ Address       :: {address}
             embed = embedmaker.Embed(title=f"{user.name}'s dox", description=f"""**Name:** {name}
 **Email:** {email}
 **Date of birth:** {dob.strftime("%d/%m/%Y")}
-**Age:** {age}
+**Current age:** {age} years old
 **Phone number:** {phone}
 **Address:** {address}
 """, colour=cfg.get("theme")["colour"])

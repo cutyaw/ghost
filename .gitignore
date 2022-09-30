@@ -136,3 +136,4 @@ dmypy.json
 config.json
 .DS_Store
 compile.py
+scripts/*
