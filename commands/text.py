@@ -93,5 +93,9 @@ class Text(commands.Cog):
             await msg.edit(content=output)
             await asyncio.sleep(1)
 
+    @commands.command(name="zalgo", description="Make your text Zalgo.", usage="[text]")
+    async def zalgo(self, ctx, *, text: str):
+        await ctx.send(requests.get(f"https://api.timbw.xyz/zalgo?text={text}").text)
+
 def setup(bot):
     bot.add_cog(Text(bot))
