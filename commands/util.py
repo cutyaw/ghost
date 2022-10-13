@@ -121,5 +121,16 @@ command amount :: {command_amount}""")), delete_after=self.cfg.get("message_sett
             await ctx.send(file=discord.File(embed_file, filename="embed.png"), delete_after=cfg.get("message_settings")["auto_delete_delay"])
             os.remove(embed_file)
 
+
+    @commands.command(name="prefix", description="Set the prefix", usage="[prefix]")
+    async def prefix(self, ctx, prefix):
+        cfg = config.Config()
+        if self.bot.command_prefix == prefix:
+            await cmdhelper.send_message(ctx, discord.Embed(title="prefix", description=f"{prefix} is already youre prefix"))
+        else:
+            await cmdhelper.send_message(ctx, discord.Embed(title="prefix", description=f"Set your prefix to {prefix}"))
+            self.bot.command_prefix = prefix
+            cfg.set("prefix", prefix)
+
 def setup(bot):
     bot.add_cog(Util(bot))
