@@ -50,6 +50,21 @@ class Fun(commands.Cog):
             await ctx.send(line)
             await asyncio.sleep(1)
 
+    @commands.command(name="coinflip", description="Flip a coin.", aliases=["cf"])
+    async def coinflip(self, ctx):
+        sides = ["heads", "tails"]
+        msg = await ctx.send("> Flipping the coin...")
+
+        await asyncio.sleep(1)
+        for i in range(random.randint(len(sides), 5)):
+            if i % 2 == 0:
+                i = 0
+
+            await msg.edit(content="> " + sides[i].capitalize() + "...")
+            await asyncio.sleep(1)
+
+        await msg.edit(content=f"> The coin landed on `{random.choice(sides)}`!")
+
     @commands.command(name="iq", description="Get the IQ of a user.", usage="[user]", aliases=["howsmart", "iqrating"])
     async def iq(self, ctx, *, user: discord.User):
         cfg = config.Config()
