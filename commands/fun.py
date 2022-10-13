@@ -57,7 +57,7 @@ class Fun(commands.Cog):
 
         await asyncio.sleep(1)
         for i in range(random.randint(len(sides), 5)):
-            if i % 2 == 0:
+            if i % len(sides) == 0:
                 i = 0
 
             await msg.edit(content="> " + sides[i].capitalize() + "...")
