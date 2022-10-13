@@ -74,11 +74,14 @@ async def send_message(ctx, discord_embed: discord.Embed, extra_title=""):
         description = description.replace("*", "")
         description = description.replace("`", "")
 
-        await ctx.send(str(codeblock.Codeblock(title=title, description=description, extra_title=extra_title)))
+        return await ctx.send(str(codeblock.Codeblock(title=title, description=description, extra_title=extra_title)))
     elif cfg.get("theme")["style"] == "image":
         embed2 = embed.Embed(title=title, description=description)
         embed2.set_footer(text=footer)
         embed2.set_thumbnail(url=discord_embed.thumbnail.url)
         embed_file = embed2.save()
-        await ctx.send(file=discord.File(embed_file, filename="embed.png"))
+        
+        msg = await ctx.send(file=discord.File(embed_file, filename="embed.png"))
         os.remove(embed_file)
+
+        return msg
